@@ -10,6 +10,8 @@ const QUICK_SUGGESTIONS = [
   'Criar novo lead',
 ]
 
+const API_BASE = import.meta.env.VITE_API_URL || ''
+
 function AIChatPanel() {
   const [open, setOpen] = useState(false)
   const [messages, setMessages] = useState([])
@@ -43,7 +45,7 @@ function AIChatPanel() {
 
     try {
       const token = localStorage.getItem('sagecrm_token')
-      const res = await fetch('/api/ai/chat', {
+      const res = await fetch(`${API_BASE}/api/ai/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
