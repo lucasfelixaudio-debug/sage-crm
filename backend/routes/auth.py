@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 from jose import jwt, JWTError
-from passlib.context import CryptContext
+import bcrypt
 from datetime import datetime, timedelta
 from database import get_db, SessionLocal
 from models import User
@@ -11,7 +11,6 @@ router = APIRouter(prefix="/api/auth", tags=["Auth"])
 
 SECRET = "sagecrm-secret-key-dev-2026"
 ALGO = "HS256"
-pwd_ctx = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 class RegisterSchema(BaseModel):
@@ -27,11 +26,11 @@ class LoginSchema(BaseModel):
 
 
 def hash_pw(pw):
-    return pwd_ctx.hash(pw)
+    return bcrypt.hashpw(pw.encode(), bcrypt.gensalt()).decode()
 
 
 def verify_pw(pw, hashed):
-    return pwd_ctx.verify(pw, hashed)
+    return bcrypt.checkpw(pw.encode(), hashed.encode())
 
 
 def create_token(user_id: int):
