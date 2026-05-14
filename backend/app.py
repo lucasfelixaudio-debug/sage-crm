@@ -33,7 +33,7 @@ app.include_router(email_router)
 app.include_router(calendar_router)
 app.include_router(webhooks_router)
 
-FRONTEND_URL = os.environ.get("FRONTEND_URL", "http://localhost:5173")
+FRONTEND_URL = os.environ.get("FRONTEND_URL", "")
 
 app.add_middleware(
     CORSMiddleware,
@@ -41,6 +41,7 @@ app.add_middleware(
         "http://localhost:3000",
         "http://localhost:5173",
         "http://localhost:5174",
+        "https://sage-crm-three.vercel.app",
         FRONTEND_URL,
     ],
     allow_credentials=True,
