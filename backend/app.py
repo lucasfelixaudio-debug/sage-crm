@@ -18,6 +18,7 @@ from routes.whatsapp import router as whatsapp_router
 from routes.email import router as email_router
 from routes.calendar import router as calendar_router
 from routes.webhooks import router as webhooks_router
+from routes.chatwoot import router as chatwoot_router
 
 Base.metadata.create_all(bind=engine)
 
@@ -32,6 +33,7 @@ app.include_router(whatsapp_router)
 app.include_router(email_router)
 app.include_router(calendar_router)
 app.include_router(webhooks_router)
+app.include_router(chatwoot_router)
 
 FRONTEND_URL = os.environ.get("FRONTEND_URL", "")
 
