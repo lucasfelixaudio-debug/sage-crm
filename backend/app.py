@@ -60,7 +60,7 @@ async def auth_middleware(request: Request, call_next):
     if request.method == "OPTIONS":
         return await call_next(request)
     public_paths = ["/", "/docs", "/openapi.json", "/redoc"]
-    if path.startswith("/api/auth") or path.startswith("/api/whatsapp/webhook") or path in public_paths:
+    if path.startswith("/api/auth") or path.startswith("/api/whatsapp/webhook") or path == "/api/chatwoot/webhook" or path in public_paths:
         return await call_next(request)
     auth = request.headers.get("Authorization", "")
     if not auth.startswith("Bearer "):
